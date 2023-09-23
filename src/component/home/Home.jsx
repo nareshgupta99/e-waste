@@ -2,6 +2,7 @@ import React, { useEffect } from "react";
 import './style.css'
 import vidz from '../../resource/vidz.mp4';
 import untitled from '../../resource/Untitled.mp4';
+import { Link } from "react-router-dom";
 
 function videoEnded(){
   var h = document.getElementById("head");
@@ -31,10 +32,12 @@ function Home() {
             </a>
           </div>
           <div className="head1">
-            <button className="sign">Home</button>
+            {/* <button className="sign">Home</button> */}
+            <Link to='/home' className="sign">Home</Link>
           </div>
           <div className="head2">
-            <button className="sign">Sign In/Sign Up</button>
+            {/* <button className="sign">Sign In/Sign Up</button> */}
+            <Link to='/login' className="sign">Sign In/Sign Up</Link>
           </div>
         </div>
 
