@@ -4,14 +4,7 @@ import "./login_style.css";
 import AuthService from "../../service/AuthService";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
-import { useDispatch } from "react-redux";
-import { loginSuccess } from '../../redux/action/authAction';
-import { privateAxios } from "../../service/helper";
-const Login = () => {
- 
-  const dispatch = useDispatch();
-  const navigate=useNavigate();
-
+const VisitorLogin = () => {
   // formik for validation
   const [signup,setSignup]=useState({
     name:"",
@@ -20,8 +13,8 @@ const Login = () => {
   })
 
   const [login,setLogin]=useState({
-    email:"",
-   password:""
+    loginEmail:"",
+    loginPassword:""
   })
 
   function handleSignup(e){
@@ -32,43 +25,24 @@ const Login = () => {
 
   function handleSignin(e){
     const {name,value}=e.target;
-    setLogin({...login,[name]:value})
-    console.log(login)
+    setSignup({...signup,[name]:value})
   }
 
   function register(e){
     e.preventDefault();
-    AuthService.registerVisitors(signup)
+    AuthService.registerRecycler(signup)
             .then((resp) => {
               console.log("register")
-              navigate("/recycler-form")
             })
             .catch((err) => {
               let msg = err.response.data.message;
               console.log(err)
             });
   }
-  function signin(e){
-    e.preventDefault();
-    AuthService.login(login)
-    .then((resp) => {
-      let token = resp.data.token;
-      localStorage.setItem('token', token);
-      dispatch(loginSuccess(token));
-
-      let roles = privateAxios.get("/user/roles")
-     
-      
-    })
-    .catch((err) => {
-      let msg = err.response.data.message;
-      // toast.error(msg, {
-      //   position: toast.POSITION.TOP_RIGHT,
-      // });
-      console.log(msg);
-    });
+  function signin(){
+    
   }
- 
+  const navigate=useNavigate();
   
   function triggerSignup() {
     const container = document.getElementById("container");
@@ -80,7 +54,7 @@ const Login = () => {
     container.classList.remove("right-panel-active");
   }
   return (
-    <div id='loginbody'>
+    <>
       <div className="container" id="container">
         <div className="form-container sign-up-container">
           <form action="#">
@@ -133,17 +107,17 @@ const Login = () => {
             <input
               type="email"
               placeholder="Email"
-              name="email"
+              name="loginEmail"
               onChange={handleSignin}
-              value={login.email}
+              value={login.loginEmail}
               
             />
             <input
               type="password"
               placeholder="Password"
-              name="password"
+              name="loginPassword"
               onChange={handleSignin}
-              value={login.password}
+              value={login.loginPassword}
               
             />
             <a href="#">Forgot your password?</a>
@@ -190,8 +164,8 @@ const Login = () => {
           </div>
         </div>
       </div>
-    </div>
+    </>
   );
 };
 
-export default Login;
+export default VisitorLogin;

@@ -1,0 +1,87 @@
+/* Reset default margin and padding for the entire page */
+html, body {
+    margin: 0;
+    padding: 0;
+  }
+  
+  /* Apply a background color and font for the entire page */
+  body {
+    font-family: Arial, sans-serif;
+    background-color: #f2f2f2;
+  }
+  
+  /* Style the form container */
+  .form-container {
+    background-color: #fff;
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 11px 0px 10px 1px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+  }
+  
+  /* Style the form heading */
+  .form-heading {
+    text-align: center;
+    margin-bottom: 20px;
+  }
+  
+  .form-heading h1 {
+    color: #333;
+  }
+  
+  /* Style the table */
+  table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+  
+  table, th, td {
+    border: 1px solid #333;
+  }
+  
+  th, td {
+    padding: 10px;
+    text-align: left;
+  }
+  
+  /* Style the form labels */
+  label {
+    font-weight: bold;
+  }
+  
+  /* Style the select and input elements */
+  select, input[type="text"], input[type="email"], input[type="checkbox"], input[type="submit"] {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+  }
+  
+  /* Style the "Yes" and "No" spans next to the checkboxes */
+  span {
+    margin-left: 5px;
+    font-weight: bold;
+  }
+  
+  /* Style the submit button */
+  .button-container {
+    text-align: center;
+  }
+  
+  .button {
+    background-color: #007BFF;
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-weight: bold;
+  }
+  
+  /* Style the submit button on hover */
+  .button:hover {
+    background-color: #0056b3;
+  }
+  

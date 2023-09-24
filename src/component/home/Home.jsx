@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import './style.css'
+import './style2.css'
 import vidz from '../../resource/vidz.mp4';
 import untitled from '../../resource/Untitled.mp4';
 import { Link } from "react-router-dom";
@@ -16,6 +16,7 @@ function videoEnded(){
 }
 function Home() {
   return (
+    <div id="homeBody">
     <div className="main" style={{display: "flex"}}>
       <div className="Wrapper" id="cover" style={{display: "flex"}}>
         <video id="myvedio" autoPlay muted width="100%" onEnded={()=>{videoEnded()}}>
@@ -48,9 +49,10 @@ function Home() {
         >
           <span className="mline">RECYCLE E-WASTE</span>
           <span className="mline">NOW !</span>
-          <button id="mbutton">Locate Recycle Centers</button>
+          <Link id="mbutton" to={"location"}>Locate Recycle Centers</Link>
         </div>
       </div>
+    </div>
     </div>
   );
 }
