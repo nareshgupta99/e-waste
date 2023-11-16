@@ -2,7 +2,7 @@
 import "./login_style.css";
 
 import AuthService from "../../service/AuthService";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useState } from "react";
 const VisitorLogin = () => {
   // formik for validation
@@ -122,6 +122,8 @@ const VisitorLogin = () => {
             />
             <a href="#">Forgot your password?</a>
             <input type='submit' value={"Sign In"} onClick={signin}/>
+            <Link to='/login' > Recycler signup</Link>
+            
           </form>
         </div>
 

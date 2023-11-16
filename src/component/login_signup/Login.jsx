@@ -2,7 +2,7 @@
 import "./login_style.css";
 
 import AuthService from "../../service/AuthService";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { loginSuccess } from '../../redux/action/authAction';
@@ -52,6 +52,7 @@ const Login = () => {
     e.preventDefault();
     AuthService.login(login)
     .then((resp) => {
+      navigate("/user-dashboard")
       let token = resp.data.token;
       localStorage.setItem('token', token);
       dispatch(loginSuccess(token));
@@ -148,6 +149,7 @@ const Login = () => {
             />
             <a href="#">Forgot your password?</a>
             <input type='submit' value={"Sign In"} onClick={signin}/>
+            <Link to='/visitor-login' > User signup</Link>
           </form>
         </div>
 

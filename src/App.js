@@ -26,7 +26,7 @@ function App() {
           <Route path='/login' element={<Login />}></Route>
           <Route path='/visitor-login' element={<VisitorLogin />}/>
           <Route path='/recycler-form' element={<RegistrationForm />}/>
-          <Route path='/updated-dashboard' element={<DashboardUser />} />
+          <Route path='/user-dashboard' element={<DashboardUser />} />
           <Route path='/location' element= {  <Map />}/>
           <Route path='/recycler/login' element={<Login />} />
           <Route path="/register-device" element={<DeviceForm />} />

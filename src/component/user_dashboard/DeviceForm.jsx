@@ -1,7 +1,36 @@
-import React from 'react'
+import React, { useState } from 'react'
 import './style5.css'
+import { privateAxios } from '../../service/helper';
 
 function DeviceForm() {
+
+  const [data,setData]=useState({
+    company:"",
+    deviceType:"",
+    deviceModel:"",
+    serialNumber:"",
+    ownerName:"",
+    phone:""
+   
+
+  });
+  function handleChange(e){
+    const {name,value}=e.target;
+    setData({...data,[name]:value})
+    console.log(data);
+  }
+
+  function handleSubmit(e){
+    e.preventDefault();
+    privateAxios.post("/registerd/ewaste",data).then((res)=>{
+      console.log("Ewaste Registerd")
+    }).catch((err)=>{
+      console.log(err)
+    })
+  }
+
+
+
   return (
     <div>
         <section class="form-container">
@@ -13,7 +42,7 @@ function DeviceForm() {
         <tr>
           <td><label for="deviceType">Select Device Type:</label></td>
           <td>
-            <select id="deviceType" name="deviceType" required>
+            <select id="deviceType" name="deviceType" onChange={handleChange} required>
               <option value="type1">Laptop</option>
               <option value="type2">Desktop</option>
               <option value="type3">Mobile-smart</option>
@@ -26,7 +55,7 @@ function DeviceForm() {
         <tr>
           <td><label for="company">Select Company:</label></td>
           <td>
-            <select id="company" name="company" required>
+            <select id="company" name="company" required onChange={handleChange}>
               <option value="company1" class="type1">Dell</option>
               <option value="company2" class="type1">Asus</option>
               <option value="company3" class="type1">Lenovo</option>
@@ -56,44 +85,39 @@ function DeviceForm() {
         <tr>
           <td><label for="deviceModel">Device Model Number:</label></td>
           <td>
-            <input type="text" id="deviceModel" name="deviceModel" required />
+            <input type="text" id="deviceModel" name="deviceModel" required value={data.deviceModel} onChange={handleChange} />
           </td>
         </tr>
         <tr>
           <td><label for="serialNumber">Serial Number:</label></td>
           <td>
-            <input type="text" id="serialNumber" name="serialNumber" required />
+            <input type="text" id="serialNumber" name="serialNumber" required value={data.serialNumber}  onChange={handleChange}/>
           </td>
         </tr>
         <tr>
           <td><label for="ownerName">Owner Name:</label></td>
           <td>
-            <input type="text" id="ownerName" name="ownerName" required />
+            <input type="text" id="ownerName" name="ownerName" required value={data.ownerName} onChange={handleChange}/>
           </td>
         </tr>
         <tr>
-          <td><label for="ownerEmail">Owner Email:</label></td>
+          <td><label for="ownerEmail"> Phone:</label></td>
           <td>
-          <label for="ownerEmail" >phone</label>
+          <input type="text" id="ownerName" name="phone" required value={data.phone} onChange={handleChange}/>
           </td>
         </tr>
-        <tr>
-          <td><label for="deviceCondition">Device Condition:</label></td>
-          <td>
-          <input type="text" id="ownerName" name="ownerName" required />
-          </td>
-        </tr>
-        <tr>
+        
+        {/* <tr>
           <td><label for="pickupRequired">Pickup Required:</label></td>
           <td>
-            <input type="checkbox" id="pickupRequired" name="pickupRequired"/><span>Yes</span>
-            <input type="checkbox" id="pickupRequired" name="pickupRequired"/><span>No</span>
+            <input type="radio" id="pickupRequired" name="pickupRequired" onChange={handleChange} value={true} /><span>Yes</span>
+            <input type="radio" id="pickupRequired" name="pickupRequired" onChange={handleChange} value={false  }/><span>No</span>
           </td>
-        </tr>
+        </tr> */}
 
         <tr>
           <td colspan="2" align="center" class="button-container">
-            <input type="submit" value="Register Device" class="button"/>
+            <input type="submit" value="Register Device" class="button"  onClick={handleSubmit}/>
           </td>
         </tr>
       </table>

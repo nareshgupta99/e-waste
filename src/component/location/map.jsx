@@ -1,7 +1,18 @@
 import React, { Component } from 'react';
-import { Map, Marker, GoogleApiWrapper } from 'google-maps-react';
+import { Map, Marker, GoogleApiWrapper, InfoWindow } from 'google-maps-react';
+import { privateAxios, publicAxios } from '../../service/helper';
+import { Link, useNavigate } from 'react-router-dom';
 
 class MapContainer extends Component {
+
+  
+  componentDidMount() {
+       publicAxios.get("/recyclers/location").then((res)=>{
+        console.log(res.data);
+    }).catch((err)=>{
+console.log(err)
+    })
+    }
   constructor(props) {
     super(props);
     this.state = {
@@ -14,7 +25,6 @@ class MapContainer extends Component {
       loadError: false,
     };
   }
-
   componentDidMount() {
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(this.handleLocation, this.handleLocationError);
@@ -75,14 +85,34 @@ class MapContainer extends Component {
         this.setState({ isLoading: false, loadError: true });
       });
   };
-
+  state = {
+    showingInfoWindow: false,
+    activeMarker: {},
+    selectedPlace: {},
+  };
+ 
+  onMarkerClick = (props, marker, e) =>
+    this.setState({
+      selectedPlace: props,
+      activeMarker: marker,
+      showingInfoWindow: true
+    });
+ 
+  onMapClicked = (props) => {
+    if (this.state.showingInfoWindow) {
+      this.setState({
+        showingInfoWindow: false,
+        activeMarker: null
+      })
+    }
+  };
   render() {
     const { currentLat, currentLng, searchedLat, searchedLng, isLoading, loadError } = this.state;
 
     return (
       <div>
-        <div className="search-bar" style={{backgroundColor:"#5baa37", padding:"9px"}}>
-          <input style={{width:"30%", height:'20px'}}
+        <div className="search-bar" style={{backgroundColor:"#5baa37", paddingLeft:"35%", height:'40%', paddingTop:'0'}}>
+          <input style={{width:"37%", height:'45px'}}
             type="text"
             placeholder="Search for a location"
             value={this.state.searchLocation}
@@ -90,7 +120,7 @@ class MapContainer extends Component {
           />
           <button style={{backgroundColor:'transparent', border:'1px solid white', marginLeft:'2%', color:'white'}} onClick={this.handleSearchSubmit}>Search</button>
         </div>
-        <div className="map-container">
+        <div className="map-container" style={{marginTop:"0"}}>
           {isLoading ? (
             <div>Loading...</div>
           ) : loadError ? (
@@ -101,13 +131,40 @@ class MapContainer extends Component {
               initialCenter={{ lat: searchedLat || currentLat, lng: searchedLng || currentLng }}
               zoom={14}
             >
+               
+
               {/* Display the current location marker */}
               {currentLat !== null && currentLng !== null && (
                 <Marker
                   name={'Current Location'}
+                  icon={"http://maps.google.com/mapfiles/ms/icons/blue.png"}
                   position={{ lat: currentLat, lng: currentLng }}
                 />
+                )}
+                <Marker
+                onClick={this.onMarkerClick}
+                name={'Recycle Centre 1'}
+                position={{ lat: 27.615811, lng: 77.613313 }}
+              /> 
+              {/* Add more markers as needed */}
+              
+              {/* Render InfoWindows */}
+              {this.state.activeMarker && (
+                <InfoWindow
+                  marker={this.state.activeMarker}
+                  visible={true}
+                  onClose={this.onCloseInfoWindow} // Close the InfoWindow when needed
+                >
+                  <div>
+                    <h3 style={{textAlign:'center'}}>{this.state.activeMarker.name}</h3>
+                    <button style={{backgroundColor:'transparent', border:'1px solid black', color:'black'}} onClick={() => console.log(`Button clicked for ${this.state.activeMarker.name}`)}>
+                    <a href='/register-device'> Choose for Pickup </a>
+                    </button>
+                    
+                  </div>
+                </InfoWindow>
               )}
+
             </Map>
           )}
         </div>
